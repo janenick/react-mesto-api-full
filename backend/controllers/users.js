@@ -24,13 +24,11 @@ module.exports.getUserById = (req, res, next) => {
 module.exports.getUserMe = (req, res, next) => {
   console.log('getUserMe.req', req);
   res.status(200).send('ok');
-  /* const { id } = req.user._id;
-  const _id = req.user._id;
-  User.findById(_id)
+  User.findById(req.user._id)
     .orFail(() => { throw new NotFoundError('Пользователь не найден'); })
     .then((user) => res.status(200).send(user))
     .catch(next);
-    */
+
 };
 
 
