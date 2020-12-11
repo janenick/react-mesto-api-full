@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+require('dotenv').config();
+const errorHandler = require('./middlewares/errorHandler')
 
 // подключаемся к серверу mongo
 mongoose.connect('mongodb://localhost:27017/mestodb_full', {
@@ -9,7 +11,8 @@ mongoose.connect('mongodb://localhost:27017/mestodb_full', {
   useFindAndModify: false,
 });
 
-const { usersRouter, cardsRouter } = require('./routes');
+// было ранее так // const { usersRouter, cardsRouter } = require('./routes');
+const router = require('./routes');
 
 // Слушаем 3000 порт
 const { PORT = 3000 } = process.env;
@@ -18,30 +21,19 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use((req, res, next) => {
+/* app.use((req, res, next) => {
   req.user = {
     _id: '5fd21f9c6965cc6250f768e7', // вставьте сюда _id созданного в предыдущем пункте пользователя
   };
   console.log('req', req);
   next();
 });
+*/
 
+app.use('/', router);
 
-app.use('/users', usersRouter);
-app.use('/cards', cardsRouter);
+app.use(errorHandler);
 
-app.use((err, req, res, next) => {
-  if (err.status !== '500') {
-    res.status(err.status).send(err.message);
-    return;
-  }
-  res.status(500).send({ message: `Ошибка на сервере: ${err.message}` });
-  next();
-});
-
-app.use((req, res) => {
-  res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
-});
 
 app.listen(PORT, () => {
   // Если всё работает, консоль покажет, какой порт приложение слушает
