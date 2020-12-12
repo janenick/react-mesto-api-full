@@ -9,13 +9,11 @@ const auth = require('../middlewares/auth');
 router.post('/signup', createUser);
 router.post('/signin', login);
 
-router.use('/cards', cardsRouter);
-router.use('/users', auth, usersRouter);
+// router.use('/cards', cardsRouter);
+router.use('/cards', auth, cardsRouter);
 //router.use('/users', usersRouter);
-// router.use('/cards', ПРОВЕРКА_JWT, cardsRouter);
-// router.use('/users', ПРОВЕРКА_JWT, A)
+router.use('/users', auth, usersRouter);
 
-//router.use('*', ОТДАТЬ_ОШИБКУ_404)
 router.use('*', (res, req, next) => {
   next(new NotFoundError('Запрашиваемый ресурс не найден'));
 });
