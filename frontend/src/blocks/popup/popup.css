@@ -1,0 +1,43 @@
+@import url('./__title/popup__title.css');
+@import url('./__title/_type/popup__title_type_elem.css');
+@import url('./__input/popup__input.css');
+@import url('./__input/_type/popup__input_type_error.css');
+@import url('./__input/_type/popup__input_type_popup.css');
+@import url('./__input/_type/popup__input_type_elem.css');
+@import url('./__input-error/popup__input-error.css');
+@import url('./__input-error/_visible/popup__input-error_visible.css');
+@import url('./__form/popup__form.css');
+@import url('./__form-field/popup__form-field.css');
+@import url('./__container/popup__container.css');
+@import url('./__container/_type/popup__container_type_popup.css');
+@import url('./__btn-save/popup__btn-save.css');
+@import url('./__btn-save/_type/popup__btn-save_type_elem.css');
+@import url('./__btn-save/_type/popup__btn-save_type_popup.css');
+@import url('./__btn-save/_disabled/popup__btn-save_disabled.css');
+@import url('./__btn-close/popup__btn-close.css');
+@import url('./__img-container/popup__img-container.css');
+@import url('./__img/popup__img.css');
+@import url('./__caption/popup__caption.css');
+@import url('./__text-info-toollip/popup__text-info-toollip.css');
+@import url('./__icon/popup__icon.css');
+@import url('./__link/popup__link.css');
+
+.popup {
+  font-family: 'Inter', Arial, sans-serif;
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+
+  width: 100%;
+  min-height: 100%;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  transition: visibility 0.7s linear, opacity 0.3s linear;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}

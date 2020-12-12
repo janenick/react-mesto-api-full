@@ -1,0 +1,26 @@
+.profile__btn-edit {
+  display: inline-flex; /*иначе в firefox кнопка не выравнивается в одну линию с текстом profile__name*/
+  min-width: 24px;
+  height: 24px;
+  user-select: none;
+  background: #000000;
+  background: url(../../../images/profile/edit_button.svg) center no-repeat;
+  border: 2px solid #ffffff;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 425px) {
+  .profile__btn-edit {
+    min-width: 18px;
+    height: 18px;
+  }
+}
+
+.profile__btn-edit:hover {
+  opacity: 0.6;
+}
+
+.profile__btn-edit:focus {
+  outline: none;
+}

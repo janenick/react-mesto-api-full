@@ -1,0 +1,32 @@
+.profile__btn-add {
+  min-width: 150px;
+  height: 50px;
+  user-select: none;
+  background: #000000;
+  background: url(../../../images/profile/btn-plus.svg) center no-repeat;
+  background-size: 22px;
+  border: 2px solid #ffffff;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1024px) {
+  .profile__btn-add {
+    margin-top: 36px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .profile__btn-add {
+    min-width: 282px;
+    background-size: 16px;
+  }
+}
+
+.profile__btn-add:hover {
+  opacity: 0.6;
+}
+
+.profile__btn-add:focus {
+  outline: none;
+}

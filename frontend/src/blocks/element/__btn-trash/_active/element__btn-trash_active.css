@@ -1,0 +1,4 @@
+.element__btn-trash_active {
+  visibility: visible;
+  pointer-events: all;
+}

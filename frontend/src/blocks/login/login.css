@@ -1,0 +1,12 @@
+.register {
+  font-family: "Inter", Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+
+  width: 100%;
+  min-height: 100%;
+  margin: auto;
+  padding-top: 60px;
+}

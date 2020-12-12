@@ -1,0 +1,26 @@
+.section {
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 1024px) {
+  .section {
+    max-width: 582px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .section {
+    max-width: 320px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .section {
+    padding-right: 19px;
+    padding-left: 19px;
+  }
+}

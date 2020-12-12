@@ -1,0 +1,21 @@
+.profile__btn-avatar-edit {
+  /*display: inline-flex; /*иначе в firefox кнопка не выравнивается в одну линию с текстом profile__name*/
+  min-width: 26px;
+  height: 26px;
+  user-select: none;
+  /*background: #000000;*/
+  background: url(../../../images/profile/edit_button.svg) center no-repeat;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  /* !!! временно. потом переставить */
+  top: 0;
+  left: 0;
+  /*top: 50%;
+  left: 50%;
+  /*transform: translate(-50%, -50%);*/
+}
+
+.profile__btn-avatar-edit {
+  outline: none;
+}

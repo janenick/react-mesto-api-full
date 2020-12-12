@@ -1,0 +1,19 @@
+.profile__avatar-img {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  /*display: flex;*/
+}
+
+.profile__avatar-img:hover {
+  opacity: 0.6;
+}
+
+.profile__avatar-img::after {
+  background-image: url(../../../images/profile/edit_button.svg);
+}
+
+.profile__avatar-img:focus {
+  outline: none;
+}

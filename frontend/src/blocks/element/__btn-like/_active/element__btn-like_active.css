@@ -1,0 +1,4 @@
+.element__btn-like_active {
+  background: url("../../../../images/element/btn-heart-filled.svg") center no-repeat;
+  background-size: 100% 100%;
+  }

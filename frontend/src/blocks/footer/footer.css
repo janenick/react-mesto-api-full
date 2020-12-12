@@ -1,0 +1,13 @@
+@import url("./__copyright/footer__copyright.css");
+
+.footer {
+  font-family: "Inter", Arial, sans-serif;
+  margin-top: 66px;
+  width: 100%;
+}
+
+@media screen and (max-width: 640px) {
+  .footer {
+    margin-top: 48px;
+  }
+}

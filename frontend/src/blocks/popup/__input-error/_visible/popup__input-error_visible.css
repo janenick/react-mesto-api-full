@@ -1,0 +1,5 @@
+
+.popup__input-error_visible {
+  display: block;
+  opacity: 1;
+}

@@ -1,0 +1,22 @@
+.element__btn-trash {
+  visibility: hidden;
+  pointer-events: none;
+  width: 18px;
+  height: 19px;
+  background: url(../../../images/element/trash.svg) center no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
+  border: 0;
+  position: absolute;
+  right: 19px;
+  top: 18px;
+  border: 0;
+}
+
+.element__btn-trash:hover {
+  opacity: 0.6;
+}
+
+.element__btn-trash:focus {
+  outline: none;
+}

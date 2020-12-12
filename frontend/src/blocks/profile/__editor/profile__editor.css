@@ -1,0 +1,6 @@
+.profile__editor {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin-left: 30px;
+}
