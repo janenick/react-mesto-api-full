@@ -3,10 +3,12 @@
 Репозиторий для приложения проекта `Mesto`, включающий фронтенд и бэкенд части приложения со следующими возможностями: авторизации и регистрации пользователей, операции с карточками и пользователями.
   
 Домен приложения: https://janenick.students.nomoredomains.rocks
+
 REST API: https://api.janenick.students.nomoredomains.rocks
+
 Публичный IP: 178.154.229.238
 
-
+Alt-H1
 **Применяемые технологии**
 * Node.js
 * Express
@@ -16,6 +18,7 @@ REST API: https://api.janenick.students.nomoredomains.rocks
 
 ---------------
 **Роуты**
+
 POST /signup — роут для регистрации
 POST /signin — роут для логина
 
@@ -33,6 +36,7 @@ DELETE /cards/:cardId/likes — убрать лайк с карточки
 
 ---------------
 **Запуск:**
+
 npm i - устанавливаем зависимости
 npm run dev - для запуска сервера с hot-reload
 npm run start - для запуска сервера
