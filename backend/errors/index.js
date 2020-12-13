@@ -18,7 +18,6 @@ module.exports.sendError = (err, res) => {
 
 
 module.exports.errorHandler = (err, next) => {
-  console.log('errors/errorHandler.err: ', err);
   if (err.kind === 'ObjectId') {
     next(new ValidationError('id не удовлетворяет условиям'));
   } else if (err.statusCode === 404) {

@@ -161,6 +161,11 @@ function App() {
         } else {
           return new Promise().reject();
         }
+
+        api.getUserInfo().then((initialUserInfo) => {
+          setCurrentUser(initialUserInfo);
+        }
+        );
       })
       .catch((err) => {
         if (err.data) {
@@ -183,7 +188,6 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log(err);
         if (err.data) {
           if (err.data.message) {
             onOpenPopupInfoTooltip(false, err.data.message);
@@ -219,6 +223,7 @@ function App() {
   const onSignOut = () => {
     // выход из профиля
     localStorage.removeItem('token');
+    setSelectedCard({});
     setEmail('');
     setLoggedIn(false);
   }
