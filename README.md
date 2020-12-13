@@ -38,7 +38,7 @@ REST API: https://api.janenick.students.nomoredomains.rocks
 ---------------
 **Запуск:**
 
-npm i - устанавливаем зависимости
-npm run dev - для запуска сервера с hot-reload
-npm run start - для запуска сервера
+npm i - устанавливаем зависимости 
+npm run dev - для запуска сервера с hot-reload 
+npm run start - для запуска сервера 
 
