@@ -39,6 +39,11 @@ function App() {
   const history = useHistory();
   // <-- авторизация
 
+  function handleError(err) {
+    renderError(`Ошибка: ${err}`);
+    onOpenPopupInfoTooltip(false, 'Что-то пошло не так');
+  }
+
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
   }
@@ -73,7 +78,7 @@ function App() {
       setCards(newCards);
     })
       .catch((err) => {
-        renderError(`Ошибка: ${err}`);
+        handleError(err);
       });
   }
 
@@ -87,17 +92,17 @@ function App() {
       setCards(newCards);
     })
       .catch((err) => {
-        renderError(`Ошибка: ${err}`);
+        handleError(err);
       });
   }
 
   function handleUpdateUser({ name, about }) {
     api.changeUserInfo({ name, about }).then(data => {
-      setCurrentUser(data);
+      setCurrentUser(data.user);
       closeAllPopups();
     })
       .catch((err) => {
-        renderError(`Ошибка: ${err}`);
+        handleError(err);
       });
 
   }
@@ -105,11 +110,11 @@ function App() {
 
   function handleUpdateAvatar({ avatar }) {
     api.changeAvatar({ avatar }).then(data => {
-      setCurrentUser(data);
+      setCurrentUser(data.user);
       closeAllPopups();
     })
       .catch((err) => {
-        renderError(`Ошибка: ${err}`);
+        handleError(err);
       });
   }
 
@@ -122,7 +127,7 @@ function App() {
       closeAllPopups();
     })
       .catch((err) => {
-        renderError(`Ошибка: ${err}`);
+        handleError(err);
       });
   }
 

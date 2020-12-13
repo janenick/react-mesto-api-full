@@ -4,6 +4,7 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const UnauthError = require('../errors/UnauthError');
 const ConflictError = require('../errors/ConflictError');
+const { errorHandler } = require('../errors');
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.getUsers = (req, res, next) => {
@@ -25,7 +26,7 @@ module.exports.getUserMe = (req, res, next) => {
   User.findById(req.user._id)
     .orFail(() => { throw new NotFoundError('Пользователь не найден'); })
     .then((user) => res.status(200).send(user))
-    .catch(next);
+    .catch((err) => errorHandler(err, next));
 
 };
 
@@ -38,20 +39,20 @@ module.exports.createUser = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'MongoError' && err.code === 11000) {
         next(new ConflictError('Пользователь с таким e-mail уже существует'));
-      } else next(err);
+      } else next((err) => errorHandler(err, next));
     });
 };
 
 module.exports.updateProfile = (req, res, next) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate(
-    user._id,
+    req.user._id,
     { name, about },
     { new: true },
   )
     .orFail(() => { throw new NotFoundError('Пользователь не найден'); })
-    .then((user) => res.status(200).send({ data: user }))
-    .catch(next);
+    .then((user) => res.status(200).send({ user }))
+    .catch((err) => errorHandler(err, next));
 };
 
 module.exports.updateAvatar = (req, res, next) => {
@@ -62,8 +63,8 @@ module.exports.updateAvatar = (req, res, next) => {
     { new: true },
   )
     .orFail(() => { throw new NotFoundError('Пользователь не найден'); })
-    .then((user) => res.status(200).send({ data: user }))
-    .catch(next);
+    .then((user) => res.status(200).send({ user }))
+    .catch((err) => errorHandler(err, next));
 };
 
 module.exports.login = (req, res, next) => {
