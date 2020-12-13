@@ -1,6 +1,9 @@
-import {
+/*import {
   apiParams
 } from './constants.js';
+*/
+
+const baseUrl = `${window.location.protocol}${process.env.REACT_APP_API_URL || '//localhost:3003'}`
 
 const _handleError = (res) => {
   if (res.ok) {
@@ -132,8 +135,16 @@ class Api {
   }
 }
 
-const api = new Api({
+/* const api = new Api({
   baseUrl: apiParams.baseUrl,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
+*/
+
+const api = new Api({
+  baseUrl: baseUrl,
   headers: {
     'Content-Type': 'application/json'
   }

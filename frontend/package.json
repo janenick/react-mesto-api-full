@@ -1,5 +1,5 @@
 {
-  "name": "mesto-react-auth",
+  "name": "mesto-react-full",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -16,7 +16,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && scp -r ./build/* janebornick-vm@178.154.229.238:/home/janebornick-vm/mesto-frontend"
+    "deploy": "npm run build && scp -r ./build/* janebornick-vm@178.154.229.238:/home/janebornick-vm/react-mesto-api-full/frontend"
   },
   "eslintConfig": {
     "extends": "react-app"
