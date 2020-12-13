@@ -8,7 +8,8 @@ REST API: https://api.janenick.students.nomoredomains.rocks
 
 Публичный IP: 178.154.229.238
 
-Alt-H1
+---------------
+
 **Применяемые технологии**
 * Node.js
 * Express
