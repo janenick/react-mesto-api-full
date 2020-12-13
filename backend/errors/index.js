@@ -18,6 +18,7 @@ module.exports.sendError = (err, res) => {
 
 
 module.exports.errorHandler = (err, next) => {
+  console.log('errors/errorHandler.err: ', err);
   if (err.kind === 'ObjectId') {
     next(new ValidationError('id не удовлетворяет условиям'));
   } else if (err.statusCode === 404) {
@@ -25,6 +26,9 @@ module.exports.errorHandler = (err, next) => {
   } else if (err.name === 'ValidationError') {
     const errorTexts = Object.values(err.errors).map((error) => error.message).join(', ')
     next(new ValidationError(errorTexts));
+  } else if (err.name === 'ValidatorError') {
+    // const errorTexts = Object.values(err.errors).map((error) => error.message).join(', ')
+    next(new ValidationError('Ошибка валидации'));
   } else if (err.name === 'CastError') {
     next(new ValidationError(`Указаны некорректные данные при обновлении: ${err.message}`));
   } else {

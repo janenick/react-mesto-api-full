@@ -61,12 +61,14 @@ function App() {
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+    const isLiked = card.likes.some(i => i === currentUser._id);
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+      //const newCard = data.card;
       // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
-      const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+      const newCards = cards.map((c) => c._id === card._id ? newCard.data : c);
       // Обновляем стейт
       setCards(newCards);
     })
@@ -116,7 +118,7 @@ function App() {
     api.addNewCard({ name, link }).then((newCard) => {
 
       // Обновляем стейт карточек
-      setCards([newCard, ...cards]);
+      setCards([newCard.card, ...cards]);
       closeAllPopups();
     })
       .catch((err) => {
@@ -167,7 +169,7 @@ function App() {
   const onRegister = (password, email) => {
     auth.register(password, email)
       .then((res) => {
-        if (res.data.data.email) {
+        if (res.data.user.email) {
           history.push('./sign-in');
           onOpenPopupInfoTooltip(true, 'Вы успешно зарегистрировались!');
 
@@ -196,8 +198,8 @@ function App() {
 
     if (token) {
       auth.getContent(token).then((res) => {
-        if (res.data.data.email) {
-          setEmail(res.data.data.email);
+        if (res.data.email) {
+          setEmail(res.data.email);
           setLoggedIn(true);
         } else {
           return new Promise().reject();
@@ -228,7 +230,7 @@ function App() {
 
   React.useEffect(() => {
     api.getCardsFromServer().then((initialCardList) => {
-      const cardList = initialCardList.map(card => card);
+      const cardList = initialCardList.reverse().map(card => card);
       setCards(cardList);
     })
       .catch((err) => console.error(err));

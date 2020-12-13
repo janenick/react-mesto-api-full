@@ -13,7 +13,6 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.getUserById = (req, res, next) => {
-  console.log('getUserById.req', req);
   const { id } = req.params;
   User.findById(id)
     .orFail(() => { throw new NotFoundError('Пользователь не найден'); })
@@ -23,8 +22,6 @@ module.exports.getUserById = (req, res, next) => {
 
 
 module.exports.getUserMe = (req, res, next) => {
-  console.log('getUserMe.req', req);
-  //res.status(200).send('ok');
   User.findById(req.user._id)
     .orFail(() => { throw new NotFoundError('Пользователь не найден'); })
     .then((user) => res.status(200).send(user))
@@ -37,7 +34,7 @@ module.exports.createUser = (req, res, next) => {
   const { email, password, name, about, avatar } = req.body;
   bcrypt.hash(password, 10)
     .then(hash => User.create({ email, password: hash, name, about, avatar }))
-    .then((user) => res.status(201).send({ data: user }))
+    .then((user) => res.status(201).send({ user }))
     .catch((err) => {
       if (err.name === 'MongoError' && err.code === 11000) {
         next(new ConflictError('Пользователь с таким e-mail уже существует'));

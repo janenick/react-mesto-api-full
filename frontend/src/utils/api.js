@@ -21,7 +21,10 @@ class Api {
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers
+      headers: {
+        ...this._headers,
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      }
     })
       .then(_handleError);
   }
@@ -30,7 +33,10 @@ class Api {
   changeUserInfo(data) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
       body: JSON.stringify(
         data
       )
@@ -41,7 +47,10 @@ class Api {
   changeAvatar(data) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
       body: JSON.stringify({
         avatar: data.avatar
       })
@@ -51,15 +60,22 @@ class Api {
 
   getCardsFromServer() {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers
-    })
+      headers: {
+        ...this._headers,
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      }
+    }
+    )
       .then(_handleError);
   }
 
   addNewCard({ name, link }) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
       body: JSON.stringify({
         name: name,
         link: link
@@ -71,23 +87,32 @@ class Api {
   removeCard(id) {
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: 'DELETE',
-      headers: this._headers
+      headers: {
+        ...this._headers,
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
     })
       .then(_handleError);
   }
 
   putLike(id) {
-    return fetch(`${this._baseUrl}/cards/likes/${id}`, {
+    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'PUT',
-      headers: this._headers
+      headers: {
+        ...this._headers,
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
     })
       .then(_handleError);
   }
 
   deleteLike(id) {
-    return fetch(`${this._baseUrl}/cards/likes/${id}`, {
+    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'DELETE',
-      headers: this._headers
+      headers: {
+        ...this._headers,
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
     })
       .then(_handleError);
   }
@@ -108,9 +133,8 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: apiParams.baseUrl + '/v1/' + apiParams.cohortId,
+  baseUrl: apiParams.baseUrl,
   headers: {
-    authorization: apiParams.token,
     'Content-Type': 'application/json'
   }
 });

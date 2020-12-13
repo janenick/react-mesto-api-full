@@ -1,7 +1,8 @@
-export const BASE_URL = 'https://auth.nomoreparties.co';
+import {
+  apiParams
+} from './constants.js';
 
-// const checkResponse = (response) => response.ok ? response.json() : Promise.reject(`Ошибка from auth: ${response}`);
-
+const BASE_URL = apiParams.baseUrl;
 
 const checkResponce = (res) => {
   return new Promise((resolve, reject) => {
