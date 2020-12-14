@@ -43,7 +43,7 @@ const validateProfileUpdate = celebrate({
 const validateAvatar = celebrate({
   body: Joi.object().keys({
     avatar: Joi.string().uri().required(),
-  }).unknown(true),
+  }),
 });
 
 module.exports = {

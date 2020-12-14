@@ -1,11 +1,4 @@
-/*import {
-  apiParams
-} from './constants.js';
-
-const BASE_URL = apiParams.baseUrl;
-*/
-
-const baseUrl = `${window.location.protocol}${process.env.REACT_APP_API_URL || '//localhost:3003'}`
+const baseUrl = `${window.location.protocol}${process.env.REACT_APP_API_URL || '//localhost:3003'}`;
 
 const checkResponce = (res) => {
   return new Promise((resolve, reject) => {
@@ -14,7 +7,7 @@ const checkResponce = (res) => {
       func({ 'status': res.status, 'data': data })
     })
   })
-}
+};
 
 export const register = (password, email) => {
   return fetch(`${baseUrl}/signup`, {
@@ -28,7 +21,6 @@ export const register = (password, email) => {
     .then(checkResponce)
 };
 
-
 export const authorize = (email, password) => {
   return fetch(`${baseUrl}/signin`, {
     method: 'POST',
@@ -40,6 +32,7 @@ export const authorize = (email, password) => {
   })
     .then(checkResponce)
 };
+
 export const getContent = (token) => {
   return fetch(`${baseUrl}/users/me`, {
     method: 'GET',
@@ -50,6 +43,4 @@ export const getContent = (token) => {
     }
   })
     .then(checkResponce)
-}
-
-
+};

@@ -22,28 +22,18 @@ const router = require('./routes');
 const { PORT = 3003 } = process.env;
 const app = express();
 
-app.use(cors());
-
-app.use(helmet()); // для простановки security-заголовков для API
-
 // --> настройки cors
 const allowedCors = [
   'janenick.students.nomoredomains.rocks',
   'localhost:3000'
 ];
-
-app.use(function (req, res, next) {
-  const { origin } = req.headers; // Записываем в переменную origin соответствующий заголовок
-
-  if (allowedCors.includes(origin)) { // Проверяем, что значение origin есть среди разрешённых доменов
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
-
-  next();
-});
+app.use(cors({
+  origin: allowedCors
+}));
 // <-- настройки cors
+
+app.use(helmet()); // для простановки security-заголовков для API
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
