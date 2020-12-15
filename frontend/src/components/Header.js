@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import logo from '../images/header/header-logo.svg';
 
 function Header(props) {
-
   const { pathname } = useLocation();
   const linkText = `${pathname === '/sign-in' ? 'Регистрация' : 'Войти'}`;
   const linkPath = `${pathname === '/sign-in' ? '/sign-up' : '/sign-in'}`;
@@ -18,8 +17,7 @@ function Header(props) {
               <li className='header__links-item'><p className='header__email'>{props.email}</p></li>
               <li className='header__links-item'><button onClick={props.onSignOut} className='header__btn'>Выйти</button></li>
             </>)
-            :
-            (<li className='header__links-item'><Link to={linkPath} className='header__link'>{linkText}</Link></li>)
+            : (<li className='header__links-item'><Link to={linkPath} className='header__link'>{linkText}</Link></li>)
           }
         </ul>
       </nav>

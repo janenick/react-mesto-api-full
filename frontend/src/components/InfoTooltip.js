@@ -2,10 +2,11 @@ import React from 'react';
 import singFail from '../images/popup/sing-fail.svg';
 import singSuccess from '../images/popup/sing-success.svg';
 
-
-function InfoTooltip({ name, isOpen, onClose, status, message}) {
+function InfoTooltip({
+  name, isOpen, onClose, status, message,
+}) {
   const singImg = status ? singSuccess : singFail;
-  //const singText = status ? 'Вы успешно зарегистрировались!' :  'Что-то пошло не так! Попробуйте ещё раз.';
+  // const singText = status ? 'Вы успешно зарегистрировались!' :  'Что-то пошло не так! Попробуйте ещё раз.';
   const singText = message;
 
   return (

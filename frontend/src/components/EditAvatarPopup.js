@@ -12,7 +12,6 @@ function EditAvatarPopup(props) {
     e.target.reset();
   }
 
-
   return (
     <PopupWithForm
       name='avatar'
@@ -27,7 +26,7 @@ function EditAvatarPopup(props) {
         <span id='avatar-input-error' className='popup__input-error'></span>
       </label>
     </PopupWithForm>
-  )
+  );
 }
 
 export default EditAvatarPopup;

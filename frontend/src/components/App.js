@@ -1,5 +1,7 @@
 import React from 'react';
-import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
+import {
+  Route, Switch, Redirect, useHistory,
+} from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import Login from './Login';
 import Register from './Register';
@@ -12,10 +14,10 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import InfoTooltip from './InfoTooltip';
-import { CurrentUserContext } from '../contexts/currentUserContext';
-import api from '../utils/api.js';
-import * as auth from '../utils/auth.js';
-import { renderError } from '../utils/utils.js';
+import CurrentUserContext from '../contexts/currentUserContext';
+import api from '../utils/api';
+import * as auth from '../utils/auth';
+import { renderError } from '../utils/utils';
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
@@ -39,6 +41,23 @@ function App() {
   const history = useHistory();
   // <-- авторизация
 
+  function onOpenPopupInfoTooltip(status, message) {
+    setIsRegisterSuccess(status);
+    setTooltipMessage(message);
+    setIsInfoTooltipPopupOpen(true);
+  }
+
+  function closeAllPopups() {
+    setIsEditAvatarPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
+    setAddPlacePopupOpen(false);
+    setIsImageCardPopupOpen(false);
+    setIsSubmitPopupOpen(false);
+    setIsInfoTooltipPopupOpen(false);
+
+    setSelectedCard({});
+  }
+
   function handleError(err) {
     renderError(`Ошибка: ${err}`);
     onOpenPopupInfoTooltip(false, 'Что-то пошло не так');
@@ -48,16 +67,13 @@ function App() {
     setIsEditAvatarPopupOpen(true);
   }
 
-
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
   }
 
-
   function handleAddPlaceClick() {
     setAddPlacePopupOpen(true);
   }
-
 
   function handleCardClick(card) {
     setSelectedCard({ ...card });
@@ -67,13 +83,13 @@ function App() {
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
 
-    const isLiked = card.likes.some(i => i === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-      //const newCard = data.card;
+      // const newCard = data.card;
       // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
-      const newCards = cards.map((c) => c._id === card._id ? newCard.data : c);
+      const newCards = cards.map((c) => (c._id === card._id ? newCard.data : c));
       // Обновляем стейт
       setCards(newCards);
     })
@@ -97,19 +113,17 @@ function App() {
   }
 
   function handleUpdateUser({ name, about }) {
-    api.changeUserInfo({ name, about }).then(data => {
+    api.changeUserInfo({ name, about }).then((data) => {
       setCurrentUser(data.user);
       closeAllPopups();
     })
       .catch((err) => {
         handleError(err);
       });
-
   }
-
 
   function handleUpdateAvatar({ avatar }) {
-    api.changeAvatar({ avatar }).then(data => {
+    api.changeAvatar({ avatar }).then((data) => {
       setCurrentUser(data.user);
       closeAllPopups();
     })
@@ -117,11 +131,9 @@ function App() {
         handleError(err);
       });
   }
-
 
   function handleAddPlaceSubmit({ name, link }) {
     api.addNewCard({ name, link }).then((newCard) => {
-
       // Обновляем стейт карточек
       setCards([newCard.card, ...cards]);
       closeAllPopups();
@@ -131,47 +143,39 @@ function App() {
       });
   }
 
-  function onOpenPopupInfoTooltip(status, message) {
-    setIsRegisterSuccess(status);
-    setTooltipMessage(message);
-    setIsInfoTooltipPopupOpen(true);
-  }
-
-  function closeAllPopups() {
-    setIsEditAvatarPopupOpen(false);
-    setIsEditProfilePopupOpen(false);
-    setAddPlacePopupOpen(false);
-    setIsImageCardPopupOpen(false);
-    setIsSubmitPopupOpen(false);
-    setIsInfoTooltipPopupOpen(false);
-
-    setSelectedCard({});
-  }
-
   // --> авторизация
 
-  const onLogin = (email, password) => {
+  const onLogin = (emailUser, password) => {
+    console.log('onLogin.authorize', emailUser, password);
     // авторизация
-    auth.authorize(email, password)
+    auth.authorize(emailUser, password)
+      // eslint-disable-next-line consistent-return
       .then((res) => {
+        console.log('onLogin.authorize.res', res);
+        console.log('onLogin.authorize.res.data', res.data);
+        console.log('onLogin.authorize.res.data.token', res.data.token);
         if (res.data.token) {
           localStorage.setItem('token', res.data.token);
-          setEmail(email);
+          setEmail(emailUser);
           setLoggedIn(true);
         } else {
           return new Promise().reject();
         }
-
-        api.getUserInfo().then((initialUserInfo) => {
+        auth.getContent(res.data.token).then((data) => {
+          console.log('onLogin.auth.getContent.data', data);
+          setCurrentUser(data);
+        });
+        /* api.getUserInfo().then((initialUserInfo) => {
           setCurrentUser(initialUserInfo);
-        }
-        );
+        });
 
-        api.getCardsFromServer().then((initialCardList) => {
-          const cardList = initialCardList.reverse().map(card => card);
-          setCards(cardList);
-        })
+                api.getCardsFromServer().then((initialCardList) => {
+                  const cardList = initialCardList.reverse().map((card) => card);
+                  setCards(cardList);
+                });
+                */
       })
+
       .catch((err) => {
         if (err.data) {
           onOpenPopupInfoTooltip(false, err.data.message);
@@ -179,16 +183,18 @@ function App() {
           onOpenPopupInfoTooltip(false, 'Что-то пошло не так');
         }
       });
-  }
+  };
 
-  const onRegister = (password, email) => {
-    auth.register(password, email)
+  const onRegister = (password, emailUser) => {
+    auth.register(password, emailUser)
+      // eslint-disable-next-line consistent-return
       .then((res) => {
         console.log('onRegister.res', res);
-        if (res.data.user.email) {
+        // eslint-disable-next-line no-debugger
+        debugger;
+        if (res.data.email) {
           history.push('./sign-in');
           onOpenPopupInfoTooltip(true, 'Вы успешно зарегистрировались!');
-
         } else {
           return new Promise().reject();
         }
@@ -204,27 +210,26 @@ function App() {
           onOpenPopupInfoTooltip(false, 'Что-то пошло не так');
         }
       });
-  }
-
+  };
 
   const tokenCheck = () => {
-
     const token = localStorage.getItem('token');
-
+    console.log('token', token);
     if (token) {
+      // eslint-disable-next-line consistent-return
       auth.getContent(token).then((res) => {
+        console.log('tokenCheck.auth.getContent.res', res);
         if (res.data.email) {
           setEmail(res.data.email);
           setLoggedIn(true);
         } else {
           return new Promise().reject();
         }
-
+        // return Promise().resolve();
       })
-        .catch(_ => onOpenPopupInfoTooltip(false, 'Что-то пошло не так! Проблемы с токеном.'));
+        .catch(() => onOpenPopupInfoTooltip(false, 'Что-то пошло не так! Проблемы с токеном.'));
     }
-  }
-
+  };
 
   const onSignOut = () => {
     // выход из профиля
@@ -232,33 +237,31 @@ function App() {
     setSelectedCard({});
     setEmail('');
     setLoggedIn(false);
-  }
+  };
   // <-- авторизация
 
   React.useEffect(() => {
     api.getUserInfo().then((initialUserInfo) => {
-
       setCurrentUser(initialUserInfo);
-    }
-    )
+    })
       .catch((err) => console.error(err));
   }, []);
 
   React.useEffect(() => {
     api.getCardsFromServer().then((initialCardList) => {
-      const cardList = initialCardList.reverse().map(card => card);
+      const cardList = initialCardList.reverse().map((card) => card);
       setCards(cardList);
     })
       .catch((err) => console.error(err));
   }, []);
 
   // --> авторизация
-  React.useEffect(_ => {
-    tokenCheck()
+  React.useEffect(() => {
+    tokenCheck();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
-  React.useEffect(_ => {
+  React.useEffect(() => {
     if (loggedIn) {
       history.push('/');
     }
@@ -308,7 +311,6 @@ function App() {
               onClose={closeAllPopups}
               onUpdateUser={handleUpdateUser}
             />
-
 
             <EditAvatarPopup
               isOpen={isEditAvatarPopupOpen}

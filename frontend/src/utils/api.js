@@ -1,43 +1,40 @@
-const baseUrl = `${window.location.protocol}${process.env.REACT_APP_API_URL || '//localhost:3003'}`
+const baseUrl = `${window.location.protocol}${process.env.REACT_APP_API_URL || '//localhost:3003'}`;
 
 const _handleError = (res) => {
   if (res.ok) {
     return res.json();
   }
-  else {
-    console.log(`Неудачный запрос fentch`);
-    return Promise.reject(res.status);
-  }
-}
+
+  console.log('Неудачный запрос fentch');
+  return Promise.reject(res.status);
+};
 
 class Api {
-  constructor({ baseUrl, headers }) {
-    this._baseUrl = baseUrl;
+  constructor({ baseApiUrl, headers }) {
+    this._baseUrl = baseApiUrl;
     this._headers = headers;
   }
-
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: {
         ...this._headers,
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      }
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
     })
       .then(_handleError);
   }
-
 
   changeUserInfo(data) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: {
         ...this._headers,
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
       body: JSON.stringify(
-        data
-      )
+        data,
+      ),
     })
       .then(_handleError);
   }
@@ -47,11 +44,11 @@ class Api {
       method: 'PATCH',
       headers: {
         ...this._headers,
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
       body: JSON.stringify({
-        avatar: data.avatar
-      })
+        avatar: data.avatar,
+      }),
     })
       .then(_handleError);
   }
@@ -60,10 +57,9 @@ class Api {
     return fetch(`${this._baseUrl}/cards`, {
       headers: {
         ...this._headers,
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      }
-    }
-    )
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
       .then(_handleError);
   }
 
@@ -72,12 +68,12 @@ class Api {
       method: 'POST',
       headers: {
         ...this._headers,
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
       body: JSON.stringify({
-        name: name,
-        link: link
-      })
+        name,
+        link,
+      }),
     })
       .then(_handleError);
   }
@@ -87,7 +83,7 @@ class Api {
       method: 'DELETE',
       headers: {
         ...this._headers,
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     })
       .then(_handleError);
@@ -98,7 +94,7 @@ class Api {
       method: 'PUT',
       headers: {
         ...this._headers,
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     })
       .then(_handleError);
@@ -109,7 +105,7 @@ class Api {
       method: 'DELETE',
       headers: {
         ...this._headers,
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     })
       .then(_handleError);
@@ -119,10 +115,8 @@ class Api {
     if (isntLike) {
       return this.putLike(id);
     }
-    else {
 
-      return this.deleteLike(id);
-    }
+    return this.deleteLike(id);
   }
 
   getAppInfo() {
@@ -130,12 +124,11 @@ class Api {
   }
 }
 
-
 const api = new Api({
-  baseUrl: baseUrl,
+  baseUrl,
   headers: {
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
 });
 
 export default api;

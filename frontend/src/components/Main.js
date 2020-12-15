@@ -1,6 +1,6 @@
 import React from 'react';
-import Card from './Card.js';
-import { CurrentUserContext } from '../contexts/currentUserContext';
+import Card from './Card';
+import CurrentUserContext from '../contexts/currentUserContext';
 
 function Main(props) {
   // Подписываемся на контекст TranslationContext
@@ -25,11 +25,7 @@ function Main(props) {
       </section>
 
       <section className="elements section">
-        {props.cards.map((card) =>
-
-          <Card key={card._id} card={card} onCardClick={props.onCardClick} onCardLike={props.onCardLike} onCardDelete={props.onCardDelete}/>
-
-        )}
+        {props.cards.map((card) => <Card key={card._id} card={card} onCardClick={props.onCardClick} onCardLike={props.onCardLike} onCardDelete={props.onCardDelete}/>)}
       </section>
     </main>
   );

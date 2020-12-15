@@ -5,24 +5,21 @@ const Login = ({ onLogin }) => {
   const [data, setData] = useState({
     email: '',
     password: '',
-    message: ''
+    message: '',
   });
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData({
       ...data,
-      [name]: value
+      [name]: value,
     });
-  }
+  };
   const handleSubmit = (e) => {
-    e.preventDefault()
-    let { email, password } = data;
+    e.preventDefault();
+    const { email, password } = data;
     onLogin(email, password);
-
-
-  }
+  };
 
   return (
     <section className='login section'>
@@ -40,7 +37,7 @@ const Login = ({ onLogin }) => {
         <Link to='./sign-up' className='popup__link'>Ещё не зарегистрированы? Регистрация</Link>
       </div>
     </section>
-  )
-}
+  );
+};
 
 export default Login;

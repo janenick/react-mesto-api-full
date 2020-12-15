@@ -1,6 +1,6 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
-import { CurrentUserContext } from '../contexts/currentUserContext';
+import CurrentUserContext from '../contexts/currentUserContext';
 
 function EditProfilePopup(props) {
   // Подписка на контекст
@@ -20,16 +20,13 @@ function EditProfilePopup(props) {
     e.target.reset();
   }
 
-
   function handleNameChange(event) {
     setName(event.target.value);
   }
 
-
   function handleDescriptionChange(event) {
     setDescription(event.target.value);
   }
-
 
   // После загрузки текущего пользователя из API
   // его данные будут использованы в управляемых компонентах.
@@ -37,7 +34,6 @@ function EditProfilePopup(props) {
     setName(currentUser.name);
     setDescription(currentUser.about);
   }, [currentUser]);
-
 
   return (
     <PopupWithForm

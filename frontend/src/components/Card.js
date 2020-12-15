@@ -1,12 +1,12 @@
 import React from 'react';
-import { CurrentUserContext } from '../contexts/currentUserContext';
+import CurrentUserContext from '../contexts/currentUserContext';
 
 const Card = (props) => {
   const currentUser = React.useContext(CurrentUserContext);
-  const card = props.card;
+  const { card } = props;
 
   // Определяем, являемся ли мы владельцем текущей карточки
-  //const isOwn = card.owner._id === currentUser._id;
+  // const isOwn = card.owner._id === currentUser._id;
   const isOwn = String(card.owner) === currentUser._id;
 
   // Создаём переменную, которую после зададим в `className` для кнопки удаления
@@ -15,12 +15,11 @@ const Card = (props) => {
   );
 
   // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
-  const isLiked = card.likes.some(i => i === currentUser._id);
+  const isLiked = card.likes.some((i) => i === currentUser._id);
   // Создаём переменную, которую после зададим в `className` для кнопки лайка
   const cardLikeButtonClassName = (
     `element__btn-like ${isLiked ? 'element__btn-like_active' : ''}`
   );
-
 
   function handleClick() {
     props.onCardClick(card);
@@ -33,7 +32,6 @@ const Card = (props) => {
   function handleDeleteClick(evt) {
     props.onCardDelete(evt, card);
   }
-
 
   return (
     < div className='element'>
@@ -49,7 +47,7 @@ const Card = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Card;

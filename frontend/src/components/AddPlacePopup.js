@@ -11,22 +11,19 @@ function AddPlacePopup(props) {
 
     // Передаём значения управляемых компонентов во внешний обработчик
     props.onAddPlace({
-      name: name,
-      link: link
+      name,
+      link,
     });
     e.target.reset();
   }
-
 
   function handleNameChange(event) {
     setName(event.target.value);
   }
 
-
   function handleLinkChange(event) {
     setLink(event.target.value);
   }
-
 
   return (
     <PopupWithForm
@@ -46,7 +43,7 @@ function AddPlacePopup(props) {
         <span id='new-place-img-input-error' className='popup__input-error'></span>
       </label>
     </PopupWithForm>
-  )
+  );
 }
 
 export default AddPlacePopup;

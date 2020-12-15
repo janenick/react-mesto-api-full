@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 export const renderLoading = (isLoading, btnSubmit, btnText) => {
   if (isLoading) {
     btnSubmit.innerText = btnText;

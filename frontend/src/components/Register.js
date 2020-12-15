@@ -5,23 +5,22 @@ const Register = ({ onRegister }) => {
   const [data, setData] = useState({
     email: '',
     password: '',
-    message: ''
+    message: '',
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData({
       ...data,
-      [name]: value
+      [name]: value,
     });
-  }
-
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    let { email, password } = data;
+    e.preventDefault();
+    const { email, password } = data;
     onRegister(password, email);
-  }
+  };
 
   return (
     <section className='register section'>
@@ -39,8 +38,7 @@ const Register = ({ onRegister }) => {
         <Link to='./sign-in' className='popup__link'>Уже зарегистрированы? Войти</Link>
       </div>
     </section>
-  )
-
-}
+  );
+};
 
 export default Register;
