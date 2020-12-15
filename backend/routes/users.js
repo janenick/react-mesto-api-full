@@ -19,5 +19,4 @@ usersRouter.patch('/me', validateProfileUpdate, updateProfile);
 
 usersRouter.patch('/me/avatar', validateAvatar, updateAvatar);
 
-
 module.exports = usersRouter;

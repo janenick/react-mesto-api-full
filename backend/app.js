@@ -24,21 +24,22 @@ const app = express();
 
 // --> настройки cors
 const allowedCors = [
-  'janenick.students.nomoredomains.rocks',
-  'localhost:3000'
+  'https://janenick.students.nomoredomains.rocks',
+  'http://janenick.students.nomoredomains.rocks',
+  'http://localhost:3000',
 ];
 app.use(cors({
-  origin: allowedCors
+  origin: allowedCors,
 }));
 // <-- настройки cors
 
 app.use(helmet()); // для простановки security-заголовков для API
 
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(requestLogger); // подключаем логгер запросов (его нужно подключить до всех обработчиков роутов)
+// подключаем логгер запросов (его нужно подключить до всех обработчиков роутов)
+app.use(requestLogger);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -48,13 +49,13 @@ app.get('/crash-test', () => {
 
 app.use('/', router);
 
-// обработчики ошибок
-app.use(errorLogger); // подключаем логгер ошибок (его нужно подключить после обработчиков роутов и до обработчиков ошибок)
+/* обработчики ошибок
+подключаем логгер ошибок (его нужно подключить после обработчиков роутов и до обработчиков ошибок)
+*/
+app.use(errorLogger);
 app.use(errors()); // обработчик ошибок celebrate
 
-
 app.use(errorHandler);
-
 
 app.listen(PORT, () => {
   // Если всё работает, консоль покажет, какой порт приложение слушает

@@ -18,4 +18,3 @@ router.use('*', (res, req, next) => {
 });
 
 module.exports = router;
-

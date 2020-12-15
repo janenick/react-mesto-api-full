@@ -1,21 +1,17 @@
 const { celebrate, Joi } = require('celebrate');
-const { isURL } = require('validator');
-const ValidationError = require('../errors/ValidationError');
 
-validateCard = celebrate({
+const validateCard = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
     link: Joi.string().uri().required(),
   }).unknown(true),
 });
 
-
-validateСardId = celebrate({
+const validateСardId = celebrate({
   params: Joi.object().keys({
-   cardId: Joi.string().alphanum().hex().length(24),
+    cardId: Joi.string().alphanum().hex().length(24),
   }),
 });
-
 
 const validateUser = celebrate({
   body: Joi.object().keys({
@@ -24,13 +20,11 @@ const validateUser = celebrate({
   }),
 });
 
-
-validateId = celebrate({
+const validateId = celebrate({
   params: Joi.object().keys({
     id: Joi.string().alphanum().hex().length(24),
   }),
 });
-
 
 const validateProfileUpdate = celebrate({
   body: Joi.object().keys({
@@ -38,7 +32,6 @@ const validateProfileUpdate = celebrate({
     about: Joi.string().required().min(2).max(30),
   }).unknown(true),
 });
-
 
 const validateAvatar = celebrate({
   body: Joi.object().keys({
@@ -52,5 +45,5 @@ module.exports = {
   validateUser,
   validateId,
   validateProfileUpdate,
-  validateAvatar
+  validateAvatar,
 };

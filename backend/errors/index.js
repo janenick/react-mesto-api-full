@@ -1,5 +1,5 @@
-const NotFoundError = require('../errors/NotFoundError');
-const ValidationError = require('../errors/ValidationError');
+const NotFoundError = require('./NotFoundError');
+const ValidationError = require('./ValidationError');
 
 module.exports.sendError = (err, res) => {
   if (err.kind === 'ObjectId') {
@@ -16,14 +16,13 @@ module.exports.sendError = (err, res) => {
   }
 };
 
-
 module.exports.errorHandler = (err, next) => {
   if (err.kind === 'ObjectId') {
     next(new ValidationError('id не удовлетворяет условиям'));
   } else if (err.statusCode === 404) {
     next(new NotFoundError('Объект не найден'));
   } else if (err.name === 'ValidationError') {
-    const errorTexts = Object.values(err.errors).map((error) => error.message).join(', ')
+    const errorTexts = Object.values(err.errors).map((error) => error.message).join(', ');
     next(new ValidationError(errorTexts));
   } else if (err.name === 'ValidatorError') {
     // const errorTexts = Object.values(err.errors).map((error) => error.message).join(', ')
