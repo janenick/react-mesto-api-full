@@ -166,6 +166,11 @@ function App() {
           setCurrentUser(initialUserInfo);
         }
         );
+
+        api.getCardsFromServer().then((initialCardList) => {
+          const cardList = initialCardList.reverse().map(card => card);
+          setCards(cardList);
+        })
       })
       .catch((err) => {
         if (err.data) {
@@ -179,6 +184,7 @@ function App() {
   const onRegister = (password, email) => {
     auth.register(password, email)
       .then((res) => {
+        console.log('onRegister.res', res);
         if (res.data.user.email) {
           history.push('./sign-in');
           onOpenPopupInfoTooltip(true, 'Вы успешно зарегистрировались!');

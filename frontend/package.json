@@ -18,9 +18,6 @@
     "eject": "react-scripts eject",
     "deploy": "npm run build && scp -r ./build/* janebornick-vm@178.154.229.238:/home/janebornick-vm/react-mesto-api-full/frontend"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -35,6 +32,9 @@
   },
   "homepage": "./",
   "devDependencies": {
+    "eslint": "^7.12.1",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.1",
     "gh-pages": "^3.1.0"
   }
 }
