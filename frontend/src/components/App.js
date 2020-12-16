@@ -228,12 +228,14 @@ function App() {
   }, []);
 
   React.useEffect(() => {
-    api.getCardsFromServer().then((initialCardList) => {
-      const cardList = initialCardList.reverse().map((card) => card);
-      setCards(cardList);
-    })
-      .catch((err) => console.error(err));
-  }, []);
+    if (loggedIn) {
+      api.getCardsFromServer().then((initialCardList) => {
+        const cardList = initialCardList.reverse().map((card) => card);
+        setCards(cardList);
+      })
+        .catch((err) => console.error(err));
+    }
+  }, [loggedIn]);
 
   // --> авторизация
   React.useEffect(() => {
