@@ -124,11 +124,13 @@ class Api {
   }
 }
 
-const api = new Api({
-  baseUrl,
-  headers: {
-    'Content-Type': 'application/json',
+const api = new Api(
+  {
+    baseApiUrl: baseUrl,
+    headers: {
+      'Content-Type': 'application/json',
+    },
   },
-});
+);
 
 export default api;

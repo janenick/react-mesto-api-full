@@ -16,7 +16,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && scp -r ./build/* janebornick-vm@178.154.229.238:/home/janebornick-vm/react-mesto-api-full/frontend"
+    "deploy": "npm run build && gh-pages -d build"
   },
   "browserslist": {
     "production": [

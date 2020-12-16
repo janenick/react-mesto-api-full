@@ -146,36 +146,17 @@ function App() {
   // --> авторизация
 
   const onLogin = (emailUser, password) => {
-    console.log('onLogin.authorize', emailUser, password);
     // авторизация
     auth.authorize(emailUser, password)
-      // eslint-disable-next-line consistent-return
       .then((res) => {
-        console.log('onLogin.authorize.res', res);
-        console.log('onLogin.authorize.res.data', res.data);
-        console.log('onLogin.authorize.res.data.token', res.data.token);
-        if (res.data.token) {
+        auth.getContent(res.data.token).then((user) => {
+          setCurrentUser(user.data);
+
           localStorage.setItem('token', res.data.token);
           setEmail(emailUser);
           setLoggedIn(true);
-        } else {
-          return new Promise().reject();
-        }
-        auth.getContent(res.data.token).then((data) => {
-          console.log('onLogin.auth.getContent.data', data);
-          setCurrentUser(data);
         });
-        /* api.getUserInfo().then((initialUserInfo) => {
-          setCurrentUser(initialUserInfo);
-        });
-
-                api.getCardsFromServer().then((initialCardList) => {
-                  const cardList = initialCardList.reverse().map((card) => card);
-                  setCards(cardList);
-                });
-                */
       })
-
       .catch((err) => {
         if (err.data) {
           onOpenPopupInfoTooltip(false, err.data.message);
@@ -189,9 +170,6 @@ function App() {
     auth.register(password, emailUser)
       // eslint-disable-next-line consistent-return
       .then((res) => {
-        console.log('onRegister.res', res);
-        // eslint-disable-next-line no-debugger
-        debugger;
         if (res.data.email) {
           history.push('./sign-in');
           onOpenPopupInfoTooltip(true, 'Вы успешно зарегистрировались!');
@@ -214,18 +192,15 @@ function App() {
 
   const tokenCheck = () => {
     const token = localStorage.getItem('token');
-    console.log('token', token);
     if (token) {
       // eslint-disable-next-line consistent-return
       auth.getContent(token).then((res) => {
-        console.log('tokenCheck.auth.getContent.res', res);
         if (res.data.email) {
           setEmail(res.data.email);
           setLoggedIn(true);
         } else {
           return new Promise().reject();
         }
-        // return Promise().resolve();
       })
         .catch(() => onOpenPopupInfoTooltip(false, 'Что-то пошло не так! Проблемы с токеном.'));
     }
