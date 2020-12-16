@@ -149,12 +149,17 @@ function App() {
     // авторизация
     auth.authorize(emailUser, password)
       .then((res) => {
+        // eslint-disable-next-line consistent-return
         auth.getContent(res.data.token).then((user) => {
-          setCurrentUser(user.data);
+          if (user.data) {
+            setCurrentUser(user.data);
 
-          localStorage.setItem('token', res.data.token);
-          setEmail(emailUser);
-          setLoggedIn(true);
+            localStorage.setItem('token', res.data.token);
+            setEmail(emailUser);
+            setLoggedIn(true);
+          } else {
+            return new Promise().reject();
+          }
         });
       })
       .catch((err) => {

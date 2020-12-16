@@ -3,7 +3,7 @@ const { celebrate, Joi } = require('celebrate');
 const validateCard = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    link: Joi.string().uri().required(),
+    link: Joi.string().pattern(/^(https?:\/\/(www\.)?)[\w-]+\.[\w./():,-]+#?$/).required(),
   }).unknown(true),
 });
 
@@ -17,6 +17,16 @@ const validateUser = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(8),
+  }),
+});
+
+const validateUserRegister = celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required().min(8),
+    name: Joi.string().min(2).max(30),
+    about: Joi.string().min(2).max(30),
+    avatar: Joi.string().pattern(/^(https?:\/\/(www\.)?)[\w-]+\.[\w./():,-]+#?$/),
   }),
 });
 
@@ -35,7 +45,7 @@ const validateProfileUpdate = celebrate({
 
 const validateAvatar = celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().uri().required(),
+    avatar: Joi.string().pattern(/^(https?:\/\/(www\.)?)[\w-]+\.[\w./():,-]+#?$/).required(),
   }),
 });
 
@@ -43,6 +53,7 @@ module.exports = {
   validateCard,
   validateСardId,
   validateUser,
+  validateUserRegister,
   validateId,
   validateProfileUpdate,
   validateAvatar,
